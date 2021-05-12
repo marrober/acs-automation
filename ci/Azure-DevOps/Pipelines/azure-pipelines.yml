@@ -1,0 +1,30 @@
+trigger:
+- master
+
+resources:
+- repo: self
+
+stages:
+- stage: Scan
+  jobs:
+  - job: Scan
+    displayName: Scan with StackRox
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - script: |
+        mkdir $(System.DefaultWorkingDirectory)/artifacts
+        curl -k -L -H "Authorization: Bearer $ROX_API_TOKEN" https://$ROX_CENTRAL_ENDPOINT/api/cli/download/roxctl-linux --output ./roxctl
+        chmod +x ./roxctl
+        ./roxctl image scan -e $ROX_CENTRAL_ENDPOINT --image vulnerables/cve-2017-7494 --format csv > $(System.DefaultWorkingDirectory)/artifacts/image_scan.csv
+        ./roxctl image check -e $ROX_CENTRAL_ENDPOINT --image vulnerables/cve-2017-7494 > $(System.DefaultWorkingDirectory)/artifacts/image_check.txt
+      displayName: 'StackRox image scan'
+      env: 
+        ROX_API_TOKEN: $(roxapitoken)
+        ROX_CENTRAL_ENDPOINT: '$(roxcentralendpoint)'
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Pipeline Artifact'
+      inputs:
+        targetPath: '$(System.DefaultWorkingDirectory)/artifacts'
+        artifact: 'StackRox Output'
+      condition: succeededOrFailed()

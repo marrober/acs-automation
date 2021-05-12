@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: acs-pipeline-example-2-
+spec:
+  pipelineRef:
+    name: config-validation
+  params:
+  - name: acs_central_endpoint
+    value: acs-secret
+  - name: acs_api_token
+    value: acs-secret
+  - name: git-url
+    value: https://github.com/marrober/contributions.git    
+  - name: git-revision
+    value: main
+  - name: file-location-in-git-repo
+    value: ci/Tekton/Scenario2/assets-for-validation    
+  - name: recursive-search
+    value: "true"
+  workspaces:
+    - name: files
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Mi
+        status: {}
