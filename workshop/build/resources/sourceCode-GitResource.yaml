@@ -1,0 +1,10 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: tomcat-app-source-code
+  namespace: tomcat-app
+spec:
+  params:
+  - name: url
+    value: https://github.com/marrober/acs-automation.git
+  type: git
