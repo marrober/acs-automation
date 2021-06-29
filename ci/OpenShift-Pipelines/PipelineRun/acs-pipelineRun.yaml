@@ -11,11 +11,11 @@ spec:
   - name: acs_api_token
     value: acs-secret
   - name: git-url
-    value: https://github.com/marrober/contributions.git    
+    value: https://github.com/marrober/acs-automation.git   
   - name: git-revision
     value: main
   - name: file-location-in-git-repo
-    value: ci/Tekton/Scenario2/assets-for-validation    
+    value: ci/OpenShift-Pipelines/assets-for-validation    
   - name: recursive-search
     value: "false"
   workspaces:

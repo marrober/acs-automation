@@ -1,10 +1,10 @@
-FROM fedora
+FROM registry.access.redhat.com/ubi8/ubi
 
 USER root
 
 RUN  mkdir /opt/tomcat
 
-RUN dnf -q -y install java-1.8.0-openjdk java-11-openjdk java-1.8.0-openjdk-devel wget
+RUN dnf -q -y install java-1.8.0-openjdk wget
 
 WORKDIR /tmp
 

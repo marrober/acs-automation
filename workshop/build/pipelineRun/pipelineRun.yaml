@@ -1,33 +1,33 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: liberty-rest-app-run-pr-
+  generateName: tomcat-app-run-pr-
 spec:
   pipelineRef:
-    name: liberty-rest-app
+    name: tomcat-app
   resources:
     - name: app-source
       resourceRef:
-        name: liberty-rest-app-source-code
+        name: tomcat-app-source-code
     - name: intermediate-image
       resourceRef:
         name: intermediate
     - name: runtime-image
       resourceRef:
-        name: liberty-rest-app
+        name: tomcat-app
   params:
     - name: PATH_CONTEXT
       value: workshop
     - name: templateFileName
       value: build/template/deploy-app-template.yaml
     - name: appName
-      value: liberty-rest
+      value: tomcat-app
     - name: appGroup
-      value: Liberty
+      value: tomcat
     - name: quay-io-account
       value: "marrober"
     - name: quay-io-repository
-      value: "liberty-rest"
+      value: "tomcat"
     - name: quay-io-image-tag-name
       value: "latest"
     - name: url

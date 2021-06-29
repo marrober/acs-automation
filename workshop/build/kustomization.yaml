@@ -1,6 +1,6 @@
 resources:
 - namespace/namespace.yaml
-- image-streams/imageStream-liberty-rest-app.yaml 
+- image-streams/imageStream-tomcat-app.yaml 
 - persistentVolumes/task-cache-pvc.yaml 
 - resources/imageStreamResource-intermediate.yaml 
 - resources/imageStreamResource-liberty-rest-app.yaml 

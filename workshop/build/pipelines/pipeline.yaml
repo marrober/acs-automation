@@ -4,10 +4,10 @@ metadata:
   creationTimestamp: "2020-06-26T14:11:45Z"
   generation: 1
   labels:
-    app.kubernetes.io/instance: liberty-rest-app
+    app.kubernetes.io/instance: tomcat-app
     pipeline.openshift.io/type: kubernetes
-  name: liberty-rest-app
-  namespace: liberty-rest
+  name: tomcat-app
+  namespace: tomcat-app
 spec:
   resources:
   - name: app-source
@@ -25,7 +25,7 @@ spec:
     default: build/template/deploy-app-template.yaml
   - name: appName
     type: string
-    default: liberty-rest
+    default: tomcat
   - name: appGroup
     type: string
     default: Liberty
@@ -34,7 +34,7 @@ spec:
     default: ""
   - name: quay-io-repository
     type: string
-    default: "liberty-rest"
+    default: "tomcat"
   - name: quay-io-image-tag-name
     type: string
     default: "latest"
