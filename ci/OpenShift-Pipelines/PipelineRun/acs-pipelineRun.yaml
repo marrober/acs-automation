@@ -17,7 +17,7 @@ spec:
   - name: file-location-in-git-repo
     value: ci/OpenShift-Pipelines/assets-for-validation
   - name: recursive-search
-    value: "true"
+    value: "false"
   workspaces:
     - name: files
       volumeClaimTemplate:
