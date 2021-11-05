@@ -33,20 +33,20 @@ spec:
           env:
             - name: I_HAVE_A_SECRET
               value: 'true'
-          securityContext:
-            capabilities:
-              add:
-                - SYS_ADMIN
+#          securityContext:
+#            capabilities:
+#              add:
+#                - SYS_ADMIN
           ports:
             - containerPort: 22
               protocol: TCP
             - containerPort: 8080
               protocol: TCP
           imagePullPolicy: Always
-          volumeMounts:
-            - name: ssh-keys
-              mountPath: /root/.ssh
-          terminationMessagePolicy: File
+#          volumeMounts:
+#            - name: ssh-keys
+#              mountPath: /root/.ssh
+#          terminationMessagePolicy: File
           image: 'gcr.io/rox-se/struts-violations/visa-processor:latest-v2'
         - name: visa-processor-sidecar
           image: 'gcr.io/rox-se/srox/visa-processor:sidecar-latest-v2'
@@ -56,14 +56,14 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
-          securityContext:
-            privileged: true
+#          securityContext:
+#            privileged: true
       serviceAccount: visa-processor
-      volumes:
-        - name: ssh-keys
-          secret:
-            secretName: ssh-keys
-            defaultMode: 420
+#      volumes:
+#        - name: ssh-keys
+#          secret:
+#            secretName: ssh-keys
+#            defaultMode: 420
       dnsPolicy: ClusterFirst
   strategy:
     type: RollingUpdate
