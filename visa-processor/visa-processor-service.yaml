@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2021-10-25T07:38:28Z"
+  labels:
+    app: visa-processor
+  name: visa-processor-service
+  namespace: payments
+  resourceVersion: "36254"
+  selfLink: /api/v1/namespaces/payments/services/visa-processor-service
+  uid: 8f8da592-dbe0-4f95-84c0-cbb385823ffa
+spec:
+  clusterIP: 172.30.49.69
+  clusterIPs:
+  - 172.30.49.69
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: visa-processor
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

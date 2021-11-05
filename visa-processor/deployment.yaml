@@ -1,0 +1,74 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    admission.stackrox.io/break-glass: jira-3423
+    deployment.kubernetes.io/revision: '1'
+  name: visa-processor
+  namespace: payments
+  labels:
+    app: visa-processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: visa-processor
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: visa-processor
+    spec:
+      restartPolicy: Always
+      serviceAccountName: visa-processor
+      imagePullSecrets:
+        - name: gcrcred
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      securityContext: {}
+      containers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: visa-processor
+          env:
+            - name: I_HAVE_A_SECRET
+              value: 'true'
+          securityContext:
+            capabilities:
+              add:
+                - SYS_ADMIN
+          ports:
+            - containerPort: 22
+              protocol: TCP
+            - containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: ssh-keys
+              mountPath: /root/.ssh
+          terminationMessagePolicy: File
+          image: 'gcr.io/rox-se/struts-violations/visa-processor:latest-v2'
+        - name: visa-processor-sidecar
+          image: 'gcr.io/rox-se/srox/visa-processor:sidecar-latest-v2'
+          command:
+            - /bin/entrypoint
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+          securityContext:
+            privileged: true
+      serviceAccount: visa-processor
+      volumes:
+        - name: ssh-keys
+          secret:
+            secretName: ssh-keys
+            defaultMode: 420
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
