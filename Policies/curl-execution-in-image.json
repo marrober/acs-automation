@@ -1,0 +1,86 @@
+{
+    "policies": [
+        {
+            "id": "1d785880-6e41-46cd-a2bf-d81f0bf3e6ed",
+            "name": "Curl execution in image",
+            "description": "Alert when curl is executed at runtime.",
+            "rationale": "The use of curl could result in data or applications being ingested to a running container image. Curl could also be used to POST data to other systems.",
+            "remediation": "Run `rpm -e --nodeps $(rpm -qa '*curl')` in the image build for production containers. Change applications to no longer use package managers at runtime, if applicable.\n\nAlso ensure that dockerfiles that create production container images do not use source images that contain curl.",
+            "disabled": false,
+            "categories": [
+                "Security Best Practices"
+            ],
+            "fields": null,
+            "lifecycleStages": [
+                "RUNTIME"
+            ],
+            "eventSource": "DEPLOYMENT_EVENT",
+            "whitelists": [],
+            "exclusions": [
+                {
+                    "name": "",
+                    "deployment": {
+                        "name": "scanner",
+                        "scope": {
+                            "cluster": "",
+                            "namespace": "stackrox",
+                            "label": null
+                        }
+                    },
+                    "image": null,
+                    "expiration": null
+                },
+                {
+                    "name": "",
+                    "deployment": {
+                        "name": "",
+                        "scope": {
+                            "cluster": "",
+                            "namespace": "openshift-compliance",
+                            "label": null
+                        }
+                    },
+                    "image": null,
+                    "expiration": null
+                }
+            ],
+            "scope": [],
+            "severity": "LOW_SEVERITY",
+            "enforcementActions": [],
+            "notifiers": [],
+            "lastUpdated": "2022-02-03T12:37:10.715898641Z",
+            "SORTName": "",
+            "SORTLifecycleStage": "",
+            "SORTEnforcement": false,
+            "policyVersion": "1.1",
+            "policySections": [
+                {
+                    "sectionName": "",
+                    "policyGroups": [
+                        {
+                            "fieldName": "Process Name",
+                            "booleanOperator": "OR",
+                            "negate": false,
+                            "values": [
+                                {
+                                    "value": "curl"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "mitreAttackVectors": [
+                {
+                    "tactic": "TA0011",
+                    "techniques": [
+                        "T1105"
+                    ]
+                }
+            ],
+            "criteriaLocked": false,
+            "mitreVectorsLocked": false,
+            "isDefault": false
+        }
+    ]
+}
