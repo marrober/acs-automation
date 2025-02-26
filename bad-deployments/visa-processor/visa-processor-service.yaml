@@ -6,9 +6,6 @@ metadata:
   name: visa-processor-service
   namespace: payments
 spec:
-  clusterIP: 172.30.49.69
-  clusterIPs:
-  - 172.30.49.69
   ports:
   - name: http
     port: 8080
