@@ -47,9 +47,9 @@ spec:
 #            - name: ssh-keys
 #              mountPath: /root/.ssh
 #          terminationMessagePolicy: File
-          image: 'gcr.io/rox-se/struts-violations/visa-processor:latest-v2'
+          image: 'quay.io/rhacs-demo/visa-processor:latest-v2'
         - name: visa-processor-sidecar
-          image: 'gcr.io/rox-se/srox/visa-processor:sidecar-latest-v2'
+          image: 'quay.io/rhacs-demo/visa-processor:sidecar-latest-v2'
           command:
             - /bin/entrypoint
           resources: {}
