@@ -21,8 +21,6 @@ spec:
     spec:
       restartPolicy: Always
       serviceAccountName: visa-processor
-      imagePullSecrets:
-        - name: gcrcred
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
       securityContext: {}
@@ -43,10 +41,10 @@ spec:
             - containerPort: 8080
               protocol: TCP
           imagePullPolicy: Always
-#          volumeMounts:
-#            - name: ssh-keys
-#              mountPath: /root/.ssh
-#          terminationMessagePolicy: File
+          volumeMounts:
+            - name: ssh-keys
+              mountPath: /root/.ssh
+          terminationMessagePolicy: File
           image: 'quay.io/rhacs-demo/visa-processor:latest-v2'
         - name: visa-processor-sidecar
           image: 'quay.io/rhacs-demo/visa-processor:sidecar-latest-v2'
@@ -59,11 +57,11 @@ spec:
 #          securityContext:
 #            privileged: true
       serviceAccount: visa-processor
-#      volumes:
-#        - name: ssh-keys
-#          secret:
-#            secretName: ssh-keys
-#            defaultMode: 420
+      volumes:
+        - name: ssh-keys
+          secret:
+            secretName: ssh-keys
+            defaultMode: 420
       dnsPolicy: ClusterFirst
   strategy:
     type: RollingUpdate
